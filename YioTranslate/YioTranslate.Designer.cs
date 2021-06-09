@@ -1,4 +1,7 @@
-﻿namespace YioTranslate
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace YioTranslate
 {
     partial class YioTranslate
     {
@@ -34,18 +37,21 @@
             this.radioToPortuguese = new System.Windows.Forms.RadioButton();
             this.radioToPrimitive = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.textSugg = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.labelRunes = new System.Windows.Forms.Label();
+            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // textFrom
             // 
+            this.textFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textFrom.Location = new System.Drawing.Point(6, 10);
             this.textFrom.Multiline = true;
             this.textFrom.Name = "textFrom";
@@ -55,6 +61,7 @@
             // 
             // textTo
             // 
+            this.textTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textTo.Location = new System.Drawing.Point(6, 145);
             this.textTo.Multiline = true;
             this.textTo.Name = "textTo";
@@ -101,6 +108,17 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.Location = new System.Drawing.Point(460, 9);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(23, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = ">";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // textSugg
             // 
             this.textSugg.Location = new System.Drawing.Point(355, 11);
@@ -119,6 +137,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.textFrom);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.textTo);
@@ -127,6 +146,7 @@
             this.groupBox2.Size = new System.Drawing.Size(506, 241);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
+            this.groupBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.groupBox2_Paint);
             // 
             // pictureBox1
             // 
@@ -145,31 +165,35 @@
             // 
             this.buttonClose.BackColor = System.Drawing.Color.Red;
             this.buttonClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonClose.Location = new System.Drawing.Point(488, 18);
+            this.buttonClose.FlatAppearance.BorderSize = 0;
+            this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonClose.ForeColor = System.Drawing.Color.White;
+            this.buttonClose.Location = new System.Drawing.Point(490, 18);
             this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new System.Drawing.Size(22, 23);
+            this.buttonClose.Size = new System.Drawing.Size(20, 20);
             this.buttonClose.TabIndex = 11;
             this.buttonClose.Text = "X";
             this.buttonClose.UseVisualStyleBackColor = false;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
-            // button1
+            // labelRunes
             // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Location = new System.Drawing.Point(460, 9);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(23, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = ">";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.labelRunes.AutoSize = true;
+            this.labelRunes.Font = new System.Drawing.Font("Yioka", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRunes.ForeColor = System.Drawing.Color.White;
+            this.labelRunes.Location = new System.Drawing.Point(12, 547);
+            this.labelRunes.Name = "labelRunes";
+            this.labelRunes.Size = new System.Drawing.Size(0, 18);
+            this.labelRunes.TabIndex = 12;
             // 
             // YioTranslate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(22)))), ((int)(((byte)(24)))));
-            this.ClientSize = new System.Drawing.Size(530, 543);
+            this.ClientSize = new System.Drawing.Size(530, 664);
+            this.Controls.Add(this.labelRunes);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
@@ -182,10 +206,12 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.YioTranslate_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.YioTranslate_MouseMove);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -201,5 +227,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button button1;
+        private Label labelRunes;
     }
 }

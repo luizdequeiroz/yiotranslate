@@ -50,7 +50,39 @@ namespace YioTranslate
             }
         }
 
-        public Dicio SelectTranslate(string yiokOrSugg)
+        public Dicio SelectTranslateByPortuguese(string word)
+        {
+            using (var connection = new SQLiteConnection("Data Source=yio.db"))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = @"
+                    select ptbr, yiok, sugg from Dicio where ptbr = @ptbr;
+                ";
+
+                command.Parameters.AddWithValue("@ptbr", word);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new Dicio
+                        {
+                            PtBr = reader["ptbr"].ToString(),
+                            Yiok = reader["yiok"].ToString(),
+                            Sugg = reader["sugg"].ToString()
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        public Dicio SelectTranslateByTranslation(string yiokOrSugg)
         {
             using (var connection = new SQLiteConnection("Data Source=yio.db"))
             {

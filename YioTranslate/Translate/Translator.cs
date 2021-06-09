@@ -130,6 +130,26 @@ namespace YioTranslate.Translate
 
         public string TranslateYiok(string word, string suggestion = null)
         {
+            var database = new Database();
+            var dicio = database.SelectTranslateByPortuguese(word);
+            if (dicio != null)
+            {
+                string translation;
+                if (!string.IsNullOrEmpty(dicio.Sugg))
+                {
+                    translation = dicio.Sugg;
+                    database.InsertTranslate(word, dicio.Yiok, translation);
+
+                    return translation;
+                }
+
+                translation = dicio.Yiok;
+
+                database.InsertTranslate(word, translation, suggestion);
+
+                return translation;
+            }
+
             using (var hspell = new Hunspell("dicio\\pt_BR.aff", "dicio\\pt_BR.dic"))
             {
                 string translation = string.Empty;
@@ -153,7 +173,6 @@ namespace YioTranslate.Translate
                 {
                     translation = translation.Replace("x", "sc");
 
-                    var database = new Database();
                     database.InsertTranslate(word, translation, suggestion);
                 }
 
@@ -167,12 +186,13 @@ namespace YioTranslate.Translate
         {
             var database = new Database();
 
-            var dicio = database.SelectTranslate(word);
+            var dicio = database.SelectTranslateByTranslation(word);
 
             if (dicio != null)
             {
                 return dicio.PtBr + " ";
-            } return word + " ";
+            }
+            return word + " ";
         }
     }
 }

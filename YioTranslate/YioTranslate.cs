@@ -25,10 +25,10 @@ namespace YioTranslate
                         translations += translator.TranslateYiok(word, textSugg.Text);
 
                 textTo.Text = translations;
+                labelRunes.Text = translations;
             }
             else
             {
-                var database = new Database();
                 string portugueses = string.Empty;
                 var words = textFrom.Text.ToLower().Split(' ');
                 foreach (var word in words)
@@ -48,7 +48,7 @@ namespace YioTranslate
         {
             textFrom_TextChanged(sender, e);
         }
-        
+
         Point lastPoint;
 
         private void YioTranslate_MouseMove(object sender, MouseEventArgs e)
@@ -86,6 +86,14 @@ namespace YioTranslate
             textFrom.Text = string.Empty;
             textSugg.Text = string.Empty;
             textTo.Text = string.Empty;
+        }
+
+        private void groupBox2_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics gfx = e.Graphics;
+            var pp = sender as GroupBox;
+            gfx.Clear(pp.BackColor);
+            gfx.DrawString(pp.Text, pp.Font, new SolidBrush(pp.ForeColor), new Point(7, 0));
         }
     }
 }
