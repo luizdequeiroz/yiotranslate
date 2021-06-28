@@ -1,4 +1,6 @@
-﻿using System.Data.SQLite;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
 using YioTranslate.Models;
 
 namespace YioTranslate
@@ -17,7 +19,8 @@ namespace YioTranslate
                         id integer primary key AUTOINCREMENT,
                         ptbr text not null,
                         yiok text not null,
-                        sugg text null
+                        sugg text null,
+                        type integer not null
                     );
                 ";
 
@@ -29,7 +32,43 @@ namespace YioTranslate
             }
         }
 
-        public void InsertTranslate(string ptbr, string yiok, string sugg = null)
+        public IList<Dicio> SelectAll()
+        {
+            var dicios = new List<Dicio>();
+            using (var connection = new SQLiteConnection("Data Source=yio.db"))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = @"
+                    select id, ptbr, yiok, sugg, type from Dicio;
+                ";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        dicios.Add(new Dicio
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            PtBr =
+#if DEBUG
+                                "*********",
+#else
+                                reader["ptbr"].ToString(),
+#endif
+                            Yiok = reader["yiok"].ToString().ToUpper(),
+                            Sugg = reader["sugg"].ToString().ToUpper(),
+                            Type = (DicioType)Convert.ToInt32(reader["type"])
+                        });
+                    }
+                }
+
+                return dicios;
+            }
+        }
+
+        public void InsertTranslate(string ptbr, string yiok, string sugg = null, DicioType type = DicioType.SUBSTANTIVE)
         {
             using (var connection = new SQLiteConnection("Data Source=yio.db"))
             {
@@ -38,13 +77,14 @@ namespace YioTranslate
                 var command = connection.CreateCommand();
                 command.CommandText = @"
                     delete from Dicio where ptbr = @ptbr;
-                    insert into Dicio (ptbr, yiok, sugg) 
-                    values (@ptbr, @yiok, @sugg);
+                    insert into Dicio (ptbr, yiok, sugg, type) 
+                    values (@ptbr, @yiok, @sugg, @type);
                 ";
 
                 command.Parameters.AddWithValue("@ptbr", ptbr);
                 command.Parameters.AddWithValue("@yiok", yiok);
                 command.Parameters.AddWithValue("@sugg", sugg);
+                command.Parameters.AddWithValue("@type", (int)type);
 
                 command.ExecuteNonQuery();
             }
@@ -58,7 +98,7 @@ namespace YioTranslate
 
                 var command = connection.CreateCommand();
                 command.CommandText = @"
-                    select ptbr, yiok, sugg from Dicio where ptbr = @ptbr;
+                    select ptbr, yiok, sugg, type from Dicio where ptbr = @ptbr;
                 ";
 
                 command.Parameters.AddWithValue("@ptbr", word);
@@ -71,7 +111,8 @@ namespace YioTranslate
                         {
                             PtBr = reader["ptbr"].ToString(),
                             Yiok = reader["yiok"].ToString(),
-                            Sugg = reader["sugg"].ToString()
+                            Sugg = reader["sugg"].ToString(),
+                            Type = (DicioType)Convert.ToInt32(reader["type"])
                         };
                     }
                     else
@@ -90,7 +131,7 @@ namespace YioTranslate
 
                 var command = connection.CreateCommand();
                 command.CommandText = @"
-                    select ptbr, yiok, sugg from Dicio where yiok = @yiok or sugg = @sugg;
+                    select ptbr, yiok, sugg, type from Dicio where yiok = @yiok or sugg = @sugg;
                 ";
 
                 command.Parameters.AddWithValue("@yiok", yiokOrSugg);
@@ -104,7 +145,8 @@ namespace YioTranslate
                         {
                             PtBr = reader["ptbr"].ToString(),
                             Yiok = reader["yiok"].ToString(),
-                            Sugg = reader["sugg"].ToString()
+                            Sugg = reader["sugg"].ToString(),
+                            Type = (DicioType)Convert.ToInt32(reader["type"])
                         };
                     }
                     else
@@ -112,6 +154,23 @@ namespace YioTranslate
                         return null;
                     }
                 }
+            }
+        }
+
+        public void DeleteTranslation(int id)
+        {
+            using (var connection = new SQLiteConnection("Data Source=yio.db"))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = @"
+                    delete from Dicio where id = @id;
+                ";
+
+                command.Parameters.AddWithValue("@id", id);
+
+                command.ExecuteNonQuery();
             }
         }
     }

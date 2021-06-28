@@ -1,6 +1,7 @@
 ﻿using NHunspell;
 using System;
 using System.Linq;
+using YioTranslate.Models;
 
 namespace YioTranslate.Translate
 {
@@ -128,7 +129,7 @@ namespace YioTranslate.Translate
             return variation;
         }
 
-        public string TranslateYiok(string word, string suggestion = null)
+        public string TranslateYiok(string word, string suggestion = null, DicioType dicioType = DicioType.SUBSTANTIVE, bool IsToSave = false)
         {
             var database = new Database();
             var dicio = database.SelectTranslateByPortuguese(word);
@@ -138,14 +139,14 @@ namespace YioTranslate.Translate
                 if (!string.IsNullOrEmpty(dicio.Sugg))
                 {
                     translation = dicio.Sugg;
-                    database.InsertTranslate(word, dicio.Yiok, translation);
+                    if (IsToSave) database.InsertTranslate(word, dicio.Yiok, translation, dicioType);
 
                     return translation;
                 }
 
                 translation = dicio.Yiok;
 
-                database.InsertTranslate(word, translation, suggestion);
+                if (IsToSave) database.InsertTranslate(word, translation, suggestion, dicioType);
 
                 return translation;
             }
@@ -173,7 +174,7 @@ namespace YioTranslate.Translate
                 {
                     translation = translation.Replace("x", "sc");
 
-                    database.InsertTranslate(word, translation, suggestion);
+                    if (IsToSave) database.InsertTranslate(word, translation, suggestion, dicioType);
                 }
 
                 translation = translation + " ";
