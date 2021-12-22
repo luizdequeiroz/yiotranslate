@@ -14,52 +14,64 @@ namespace YioTranslate
         public DataTable ConvertListToDataTable<T>(IList<T> list)
         {
             var oDataTable = new DataTable();
-
             var columns = new List<DataColumn> {
                 new DataColumn("ID"),
                 new DataColumn("Português".ToUpper()),
                 new DataColumn("Yiokarih".ToUpper()),
                 new DataColumn("Tipo".ToUpper())
             }.ToArray();
-            oDataTable.Columns.AddRange(columns);
 
-            foreach (var item in list)
+            try
             {
-                var properties = item.GetType().GetProperties().Select(p => Convert.ToString(p.GetValue(item))).ToList();
-                oDataTable.Rows.Add(properties.ToArray());
+                oDataTable.Columns.AddRange(columns);
+
+                foreach (var item in list)
+                {
+                    var properties = item.GetType().GetProperties().Select(p => Convert.ToString(p.GetValue(item))).ToList();
+                    oDataTable.Rows.Add(properties.ToArray());
+                }
             }
+            catch { }
 
             return oDataTable;
         }
 
         private void LoadDataGridView()
         {
-            var database = new Database();
-            var dicios = database.SelectAll();
-
-            if (dicios.Count > 0)
+            try
             {
-                dataTranslations.DataSource = ConvertListToDataTable(dicios);
+                var database = new Database();
+                var dicios = database.SelectAll();
+
+                if (dicios.Count > 0)
+                {
+                    dataTranslations.DataSource = ConvertListToDataTable(dicios);
+                }
             }
+            catch { }
         }
 
         private void LoadComboBoxes()
         {
-            #region TYPE
-            comboType.Items.Insert((int)DicioType.VERB, DicioType.VERB.ToDescriptionString());
-            comboType.Items.Insert((int)DicioType.ADJECTIVE, DicioType.ADJECTIVE.ToDescriptionString());
-            comboType.Items.Insert((int)DicioType.SUBJECT, DicioType.SUBJECT.ToDescriptionString());
-            comboType.Items.Insert((int)DicioType.SUBSTANTIVE, DicioType.SUBSTANTIVE.ToDescriptionString());
+            try
+            {
+                #region TYPE
+                comboType.Items.Insert((int)DicioType.VERB, DicioType.VERB.ToDescriptionString());
+                comboType.Items.Insert((int)DicioType.ADJECTIVE, DicioType.ADJECTIVE.ToDescriptionString());
+                comboType.Items.Insert((int)DicioType.SUBJECT, DicioType.SUBJECT.ToDescriptionString());
+                comboType.Items.Insert((int)DicioType.SUBSTANTIVE, DicioType.SUBSTANTIVE.ToDescriptionString());
 
-            comboType.SelectedIndex = (int)DicioType.SUBSTANTIVE;
-            comboType.Text = ((DicioType)comboType.SelectedIndex).ToDescriptionString();
-            #endregion
-            #region TRANSLATE
-            comboTranslate.Items.Insert(0, "Palavra");
-            comboTranslate.Items.Insert(1, "Texto");
-            comboTranslate.SelectedIndex = 0;
-            comboTranslate.Text = "Palavra"; 
-            #endregion
+                comboType.SelectedIndex = (int)DicioType.SUBSTANTIVE;
+                comboType.Text = ((DicioType)comboType.SelectedIndex).ToDescriptionString();
+                #endregion
+                #region TRANSLATE
+                comboTranslate.Items.Insert(0, "Palavra");
+                comboTranslate.Items.Insert(1, "Texto");
+                comboTranslate.SelectedIndex = 0;
+                comboTranslate.Text = "Palavra";
+                #endregion
+            }
+            catch { }
         }
 
         public YioTranslate()
@@ -71,16 +83,20 @@ namespace YioTranslate
 
         private void Translate(bool IsToSave)
         {
-            var dicioTypeSelected = (DicioType)comboType.SelectedIndex;
+            try
+            {
+                var dicioTypeSelected = (DicioType)comboType.SelectedIndex;
 
-            var translator = new Translator();
-            string translations = string.Empty;
-            var words = textFrom.Text.ToLower().Split(' ');
-            foreach (var word in words)
-                if (!string.IsNullOrEmpty(word))
-                    translations += translator.TranslateYiok(word, textSugg.Text, dicioTypeSelected, IsToSave);
+                var translator = new Translator();
+                string translations = string.Empty;
+                var words = textFrom.Text.ToLower().Split(' ');
+                foreach (var word in words)
+                    if (!string.IsNullOrEmpty(word))
+                        translations += translator.TranslateYiok(word, textSugg.Text, dicioTypeSelected, IsToSave);
 
-            textTo.Text = translations;
+                textTo.Text = translations;
+            }
+            catch { }
         }
 
         private void textFrom_TextChanged(object sender, EventArgs e)
@@ -91,14 +107,18 @@ namespace YioTranslate
             }
             else
             {
-                var translator = new Translator();
-                string portugueses = string.Empty;
-                var words = textFrom.Text.ToLower().Split(' ');
-                foreach (var word in words)
-                    if (!string.IsNullOrEmpty(word))
-                        portugueses += translator.TranslateToPortuguese(word);
+                try
+                {
+                    var translator = new Translator();
+                    string portugueses = string.Empty;
+                    var words = textFrom.Text.ToLower().Split(' ');
+                    foreach (var word in words)
+                        if (!string.IsNullOrEmpty(word))
+                            portugueses += translator.TranslateToPortuguese(word);
 
-                textTo.Text = portugueses;
+                    textTo.Text = portugueses;
+                }
+                catch { }
             }
         }
 
@@ -116,11 +136,15 @@ namespace YioTranslate
 
         private void YioTranslate_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            try
             {
-                this.Left += e.X - lastPoint.X;
-                this.Top += e.Y - lastPoint.Y;
+                if (e.Button == MouseButtons.Left)
+                {
+                    this.Left += e.X - lastPoint.X;
+                    this.Top += e.Y - lastPoint.Y;
+                }
             }
+            catch { }
         }
 
         private void YioTranslate_MouseDown(object sender, MouseEventArgs e)
@@ -154,10 +178,14 @@ namespace YioTranslate
 
         private void groupBox2_Paint(object sender, PaintEventArgs e)
         {
-            Graphics gfx = e.Graphics;
-            var pp = sender as GroupBox;
-            gfx.Clear(pp.BackColor);
-            gfx.DrawString(pp.Text, pp.Font, new SolidBrush(pp.ForeColor), new Point(7, 0));
+            try
+            {
+                Graphics gfx = e.Graphics;
+                var pp = sender as GroupBox;
+                gfx.Clear(pp.BackColor);
+                gfx.DrawString(pp.Text, pp.Font, new SolidBrush(pp.ForeColor), new Point(7, 0));
+            }
+            catch { }
         }
 
         private void textFrom_KeyDown(object sender, KeyEventArgs e)
@@ -179,24 +207,28 @@ namespace YioTranslate
 
         private void dataTranslations_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            try
             {
-                var rowIds = new List<int>();
-                foreach(DataGridViewCell cell in dataTranslations.SelectedCells)
+                if (e.KeyCode == Keys.Delete)
                 {
-                    var row = dataTranslations.Rows[cell.RowIndex];
-                    rowIds.Add(Convert.ToInt32(cell.DataGridView[0, cell.RowIndex].Value));
+                    var rowIds = new List<int>();
+                    foreach (DataGridViewCell cell in dataTranslations.SelectedCells)
+                    {
+                        var row = dataTranslations.Rows[cell.RowIndex];
+                        rowIds.Add(Convert.ToInt32(cell.DataGridView[0, cell.RowIndex].Value));
+                    }
+
+                    foreach (var id in rowIds)
+                    {
+                        var database = new Database();
+
+                        database.DeleteTranslation(id);
+                    }
+
+                    LoadDataGridView();
                 }
-
-                foreach(var id in rowIds)
-                {
-                    var database = new Database();
-
-                    database.DeleteTranslation(id);
-                }
-
-                LoadDataGridView();
             }
+            catch { }
         }
     }
 }
