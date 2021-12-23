@@ -1,6 +1,20 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
+public class TextBoxCustom : TextBox
+{
+    protected override bool ProcessCmdKey(ref Message m, Keys keyData)
+    {
+        if (keyData == (Keys.Control | Keys.Back))
+        {
+            SendKeys.SendWait("^+{LEFT}{BACKSPACE}");
+            return true;
+        }
+
+        return base.ProcessCmdKey(ref m, keyData);
+    }
+}
+
 namespace YioTranslate
 {
     partial class YioTranslate
@@ -23,20 +37,6 @@ namespace YioTranslate
             base.Dispose(disposing);
         }
 
-        public class TextBoxCustom : TextBox
-        {
-            protected override bool ProcessCmdKey(ref Message m, Keys keyData)
-            {
-                if (keyData == (Keys.Control | Keys.Back))
-                {
-                    SendKeys.SendWait("^+{LEFT}{BACKSPACE}");
-                    return true;
-                }
-
-                return base.ProcessCmdKey(ref m, keyData);
-            }
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace YioTranslate
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YioTranslate));
-            this.textFrom = new YioTranslate.TextBoxCustom();
+            this.textFrom = new TextBoxCustom();
             this.textTo = new System.Windows.Forms.TextBox();
             this.radioToPortuguese = new System.Windows.Forms.RadioButton();
             this.radioToPrimitive = new System.Windows.Forms.RadioButton();
@@ -62,12 +62,28 @@ namespace YioTranslate
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.dataTranslations = new System.Windows.Forms.DataGridView();
+            this.dataTranslationsVerbs = new System.Windows.Forms.DataGridView();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabVerbs = new System.Windows.Forms.TabPage();
+            this.tabAdjectives = new System.Windows.Forms.TabPage();
+            this.dataTranslationsAdjectives = new System.Windows.Forms.DataGridView();
+            this.tabSubjects = new System.Windows.Forms.TabPage();
+            this.dataTranslationsSubjects = new System.Windows.Forms.DataGridView();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataTranslationsSubstantives = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTranslations)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsVerbs)).BeginInit();
+            this.tabControl.SuspendLayout();
+            this.tabVerbs.SuspendLayout();
+            this.tabAdjectives.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsAdjectives)).BeginInit();
+            this.tabSubjects.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubjects)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubstantives)).BeginInit();
             this.SuspendLayout();
             // 
             // textFrom
@@ -250,14 +266,98 @@ namespace YioTranslate
             this.buttonClose.UseVisualStyleBackColor = false;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
-            // dataTranslations
+            // dataTranslationsVerbs
             // 
-            this.dataTranslations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataTranslations.Location = new System.Drawing.Point(524, 15);
-            this.dataTranslations.Name = "dataTranslations";
-            this.dataTranslations.Size = new System.Drawing.Size(539, 557);
-            this.dataTranslations.TabIndex = 14;
-            this.dataTranslations.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
+            this.dataTranslationsVerbs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataTranslationsVerbs.Location = new System.Drawing.Point(0, 0);
+            this.dataTranslationsVerbs.Name = "dataTranslationsVerbs";
+            this.dataTranslationsVerbs.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsVerbs.TabIndex = 14;
+            this.dataTranslationsVerbs.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
+            // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.tabVerbs);
+            this.tabControl.Controls.Add(this.tabAdjectives);
+            this.tabControl.Controls.Add(this.tabSubjects);
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tabControl.Location = new System.Drawing.Point(524, 15);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(539, 557);
+            this.tabControl.TabIndex = 12;
+            // 
+            // tabVerbs
+            // 
+            this.tabVerbs.Controls.Add(this.dataTranslationsVerbs);
+            this.tabVerbs.Location = new System.Drawing.Point(4, 22);
+            this.tabVerbs.Name = "tabVerbs";
+            this.tabVerbs.Padding = new System.Windows.Forms.Padding(3);
+            this.tabVerbs.Size = new System.Drawing.Size(531, 531);
+            this.tabVerbs.TabIndex = 0;
+            this.tabVerbs.Text = "Verbos";
+            this.tabVerbs.UseVisualStyleBackColor = true;
+            // 
+            // tabAdjectives
+            // 
+            this.tabAdjectives.Controls.Add(this.dataTranslationsAdjectives);
+            this.tabAdjectives.Location = new System.Drawing.Point(4, 22);
+            this.tabAdjectives.Name = "tabAdjectives";
+            this.tabAdjectives.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAdjectives.Size = new System.Drawing.Size(531, 531);
+            this.tabAdjectives.TabIndex = 1;
+            this.tabAdjectives.Text = "Adjetivos";
+            this.tabAdjectives.UseVisualStyleBackColor = true;
+            // 
+            // dataTranslationsAdjectives
+            // 
+            this.dataTranslationsAdjectives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataTranslationsAdjectives.Location = new System.Drawing.Point(0, 0);
+            this.dataTranslationsAdjectives.Name = "dataTranslationsAdjectives";
+            this.dataTranslationsAdjectives.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsAdjectives.TabIndex = 15;
+            this.dataTranslationsAdjectives.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
+            // 
+            // tabSubjects
+            // 
+            this.tabSubjects.Controls.Add(this.dataTranslationsSubjects);
+            this.tabSubjects.Location = new System.Drawing.Point(4, 22);
+            this.tabSubjects.Name = "tabSubjects";
+            this.tabSubjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSubjects.Size = new System.Drawing.Size(531, 531);
+            this.tabSubjects.TabIndex = 2;
+            this.tabSubjects.Text = "Sujeitos";
+            this.tabSubjects.UseVisualStyleBackColor = true;
+            // 
+            // dataTranslationsSubjects
+            // 
+            this.dataTranslationsSubjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataTranslationsSubjects.Location = new System.Drawing.Point(0, 0);
+            this.dataTranslationsSubjects.Name = "dataTranslationsSubjects";
+            this.dataTranslationsSubjects.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsSubjects.TabIndex = 16;
+            this.dataTranslationsSubjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dataTranslationsSubstantives);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(531, 531);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Substantivos";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataTranslationsSubstantives
+            // 
+            this.dataTranslationsSubstantives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataTranslationsSubstantives.Location = new System.Drawing.Point(0, 0);
+            this.dataTranslationsSubstantives.Name = "dataTranslationsSubstantives";
+            this.dataTranslationsSubstantives.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsSubstantives.TabIndex = 17;
+            this.dataTranslationsSubstantives.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
             // 
             // YioTranslate
             // 
@@ -265,7 +365,7 @@ namespace YioTranslate
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(22)))), ((int)(((byte)(24)))));
             this.ClientSize = new System.Drawing.Size(1075, 586);
-            this.Controls.Add(this.dataTranslations);
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
@@ -284,7 +384,15 @@ namespace YioTranslate
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTranslations)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsVerbs)).EndInit();
+            this.tabControl.ResumeLayout(false);
+            this.tabVerbs.ResumeLayout(false);
+            this.tabAdjectives.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsAdjectives)).EndInit();
+            this.tabSubjects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubjects)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubstantives)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -301,11 +409,19 @@ namespace YioTranslate
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button buttonSave;
-        private DataGridView dataTranslations;
+        private DataGridView dataTranslationsVerbs;
         private GroupBox groupBox3;
         private Label label2;
         private ComboBox comboType;
         private ComboBox comboTranslate;
         private Label label3;
+        private TabControl tabControl;
+        private TabPage tabVerbs;
+        private TabPage tabAdjectives;
+        private TabPage tabSubjects;
+        private TabPage tabPage1;
+        private DataGridView dataTranslationsAdjectives;
+        private DataGridView dataTranslationsSubjects;
+        private DataGridView dataTranslationsSubstantives;
     }
 }

@@ -36,7 +36,7 @@ namespace YioTranslate
             return oDataTable;
         }
 
-        private void LoadDataGridView()
+        private void LoadDataGridViews()
         {
             try
             {
@@ -45,7 +45,10 @@ namespace YioTranslate
 
                 if (dicios.Count > 0)
                 {
-                    dataTranslations.DataSource = ConvertListToDataTable(dicios);
+                    dataTranslationsVerbs.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.VERB).ToList());
+                    dataTranslationsAdjectives.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.ADJECTIVE).ToList());
+                    dataTranslationsSubjects.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.SUBJECT).ToList());
+                    dataTranslationsSubstantives.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.SUBSTANTIVE).ToList());
                 }
             }
             catch { }
@@ -77,7 +80,7 @@ namespace YioTranslate
         public YioTranslate()
         {
             InitializeComponent();
-            LoadDataGridView();
+            LoadDataGridViews();
             LoadComboBoxes();
         }
 
@@ -170,7 +173,7 @@ namespace YioTranslate
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             Translate(true);
-            LoadDataGridView();
+            LoadDataGridViews();
             textFrom.Text = string.Empty;
             textSugg.Text = string.Empty;
             textTo.Text = string.Empty;
@@ -211,24 +214,29 @@ namespace YioTranslate
             {
                 if (e.KeyCode == Keys.Delete)
                 {
-                    var rowIds = new List<int>();
-                    foreach (DataGridViewCell cell in dataTranslations.SelectedCells)
-                    {
-                        var row = dataTranslations.Rows[cell.RowIndex];
-                        rowIds.Add(Convert.ToInt32(cell.DataGridView[0, cell.RowIndex].Value));
-                    }
-
-                    foreach (var id in rowIds)
-                    {
-                        var database = new Database();
-
-                        database.DeleteTranslation(id);
-                    }
-
-                    LoadDataGridView();
+                    DeleteTranslation(sender as DataGridView);
                 }
             }
             catch { }
+        }
+
+        private void DeleteTranslation(DataGridView dataGridView)
+        {
+            var rowIds = new List<int>();
+            foreach (DataGridViewCell cell in dataGridView.SelectedCells)
+            {
+                var row = dataGridView.Rows[cell.RowIndex];
+                rowIds.Add(Convert.ToInt32(cell.DataGridView[0, cell.RowIndex].Value));
+            }
+
+            foreach (var id in rowIds)
+            {
+                var database = new Database();
+
+                database.DeleteTranslation(id);
+            }
+
+            LoadDataGridViews();
         }
     }
 }

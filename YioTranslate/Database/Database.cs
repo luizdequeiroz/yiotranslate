@@ -36,77 +36,77 @@ namespace YioTranslate
 
         private void PopuleInitialData()
         {
-            InsertTranslate("arma", "ilzi", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("ferramenta", "qilze", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("roupa", "laopi", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("pedra", "pide", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("minério", "zelilea", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("madeira", "zidele", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("galho", "tirsa", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("galho", "zidele dirina", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("árvore", "amira", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("presente", "pihil", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("lua", "aul", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("lua-cheia", "aul marama", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("lua-cheia", "marama", type: DicioType.SUBSTANTIVE);
+            InsertTranslate("arma", "ilzi", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("ferramenta", "qilze", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("roupa", "laopi", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("pedra", "pide", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("minério", "zelilea", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("madeira", "zidele", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("galho", "tirsa", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("galho", "zidele dirina", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("árvore", "amira", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("presente", "pihil", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("lua", "aul", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("lua-cheia", "aul marama", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("lua-cheia", "marama", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
 
-            InsertTranslate("comida", "qaze", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("carne", "qaze", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("água", "hidi", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("fogo", "biral", type: DicioType.SUBSTANTIVE);
-            InsertTranslate("sangue", "qileda", type: DicioType.SUBSTANTIVE);
+            InsertTranslate("comida", "qaze", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("carne", "qaze", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("água", "hidi", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("fogo", "biral", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("sangue", "qileda", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
 
-            InsertTranslate("líder", "pappa iwi", type: DicioType.SUBJECT);
-            InsertTranslate("chefe", "pappa iwi", type: DicioType.SUBJECT);
-            InsertTranslate("rainha", "kuini", type: DicioType.SUBJECT);
-            InsertTranslate("princesa", "piriniha", type: DicioType.SUBJECT);
-            InsertTranslate("cacique", "rangatira", type: DicioType.SUBJECT);
-            InsertTranslate("sacerdote", "rangatira", type: DicioType.SUBJECT);
-            InsertTranslate("caçador", "ranga", type: DicioType.SUBJECT);
-            InsertTranslate("capitão", "kapene", type: DicioType.SUBJECT);
-            InsertTranslate("soldado", "hoia", type: DicioType.SUBJECT);
+            InsertTranslate("líder", "pappa iwi", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("chefe", "pappa iwi", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("rainha", "kuini", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("princesa", "piriniha", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("cacique", "rangatira", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("sacerdote", "rangatira", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("caçador", "ranga", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("capitão", "kapene", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("soldado", "hoia", type: DicioType.SUBJECT, deleteIfExists: true);
 
-            InsertTranslate("animal", "ilezir", type: DicioType.SUBJECT);
-            InsertTranslate("pessoa", "pihhai", type: DicioType.SUBJECT);
-            InsertTranslate("monstro", "zalga", type: DicioType.SUBJECT);
-            InsertTranslate("espírito", "Pelega", type: DicioType.SUBJECT);
-            InsertTranslate("deus", "dioh", type: DicioType.SUBJECT);
-            InsertTranslate("divindade", "dielde", type: DicioType.SUBJECT);
-            InsertTranslate("ancestral", "pihhida", type: DicioType.SUBJECT);
-            InsertTranslate("lobo", "raca", type: DicioType.SUBJECT);
-            InsertTranslate("urso", "olha", type: DicioType.SUBJECT);
-            InsertTranslate("rinoceronte", "bseq", type: DicioType.SUBJECT);
-            InsertTranslate("mascarado", "zibilida", type: DicioType.SUBJECT);
-            InsertTranslate("burro", "burr", type: DicioType.SUBJECT);
+            InsertTranslate("animal", "ilezir", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("pessoa", "pihhai", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("monstro", "zalga", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("espírito", "Pelega", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("deus", "dioh", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("divindade", "dielde", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("ancestral", "pihhida", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("lobo", "raca", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("urso", "olha", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("rinoceronte", "bseq", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("mascarado", "zibilida", type: DicioType.SUBJECT, deleteIfExists: true);
+            InsertTranslate("burro", "burr", type: DicioType.SUBJECT, deleteIfExists: true);
 
-            InsertTranslate("fome", "qaze", type: DicioType.ADJECTIVE);
-            InsertTranslate("sede", "hidi", type: DicioType.ADJECTIVE);
-            InsertTranslate("calor", "biral", type: DicioType.ADJECTIVE);
-            InsertTranslate("frio", "qelea", type: DicioType.ADJECTIVE);
-            InsertTranslate("morrendo", "qelea", type: DicioType.ADJECTIVE);
-            InsertTranslate("ferido", "qileda", type: DicioType.ADJECTIVE);
-            InsertTranslate("venenoso", "jilaha", type: DicioType.ADJECTIVE);
-            InsertTranslate("envenenado", "jilaha", type: DicioType.ADJECTIVE);
-            InsertTranslate("pequeno", "dirina", type: DicioType.ADJECTIVE);
-            InsertTranslate("grande", "fala", type: DicioType.ADJECTIVE);
-            InsertTranslate("amigo", "izeta", type: DicioType.ADJECTIVE);
-            InsertTranslate("inimigo", "elezeta", type: DicioType.ADJECTIVE);
+            InsertTranslate("fome", "qaze", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("sede", "hidi", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("calor", "biral", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("frio", "qelea", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("morrendo", "qelea", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("ferido", "qileda", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("venenoso", "jilaha", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("envenenado", "jilaha", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("pequeno", "dirina", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("grande", "fala", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("amigo", "izeta", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("inimigo", "elezeta", type: DicioType.ADJECTIVE, deleteIfExists: true);
 
-            InsertTranslate("preso", "piliha", type: DicioType.ADJECTIVE);
-            InsertTranslate("solto", "harga", type: DicioType.ADJECTIVE);
+            InsertTranslate("preso", "piliha", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("solto", "harga", type: DicioType.ADJECTIVE, deleteIfExists: true);
 
-            InsertTranslate("ir", "jizah", type: DicioType.VERB);
-            InsertTranslate("vamos", "jizah", type: DicioType.VERB);
-            InsertTranslate("fugir", "qoviz", type: DicioType.VERB);
-            InsertTranslate("atacar", "gibiu", type: DicioType.VERB);
-            InsertTranslate("correr", "baliu", type: DicioType.VERB);
-            InsertTranslate("partir", "baliu", type: DicioType.VERB);
-            InsertTranslate("matar", "zigiu", type: DicioType.VERB);
-            InsertTranslate("comer", "bazil", type: DicioType.VERB);
-            InsertTranslate("dançar-pra-batalha", "haka", type: DicioType.VERB);
-            InsertTranslate("dançar-pra-gradecer", "heah", type: DicioType.VERB);
-            InsertTranslate("prender", "piliha", type: DicioType.VERB);
-            InsertTranslate("soltar", "harga", type: DicioType.VERB);
+            InsertTranslate("ir", "jizah", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("vamos", "jizah", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("fugir", "qoviz", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("atacar", "gibiu", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("correr", "baliu", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("partir", "baliu", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("matar", "zigiu", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("comer", "bazil", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("dançar-pra-batalha", "haka", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("dançar-pra-gradecer", "heah", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("prender", "piliha", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("soltar", "harga", type: DicioType.VERB, deleteIfExists: true);
         }
 
         public IList<Dicio> SelectAll()
@@ -145,15 +145,15 @@ namespace YioTranslate
             }
         }
 
-        public void InsertTranslate(string ptbr, string yiok, string sugg = null, DicioType type = DicioType.SUBSTANTIVE)
+        public void InsertTranslate(string ptbr, string yiok, string sugg = null, DicioType type = DicioType.SUBSTANTIVE, bool deleteIfExists = false)
         {
             using (var connection = new SQLiteConnection("Data Source=yio.db"))
             {
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = @"
-                    -- delete from Dicio where ptbr = @ptbr;
+                command.CommandText = $@"
+                    {(deleteIfExists ? "delete from Dicio where ptbr = @ptbr and yiok = @yiok;" : "")}
                     insert into Dicio (ptbr, yiok, sugg, type) 
                     values (@ptbr, @yiok, @sugg, @type);
                 ";
