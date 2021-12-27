@@ -90,6 +90,7 @@
     <Compile Include="Database\Database.cs" />
     <Compile Include="Models\Dicio.cs" />
     <Compile Include="Models\DicioType.cs" />
+    <Compile Include="Models\Relationship.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translate\Translator.cs" />

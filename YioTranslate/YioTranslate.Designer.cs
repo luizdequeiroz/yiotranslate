@@ -46,7 +46,6 @@ namespace YioTranslate
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YioTranslate));
-            this.textFrom = new TextBoxCustom();
             this.textTo = new System.Windows.Forms.TextBox();
             this.radioToPortuguese = new System.Windows.Forms.RadioButton();
             this.radioToPrimitive = new System.Windows.Forms.RadioButton();
@@ -60,6 +59,7 @@ namespace YioTranslate
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboTranslate = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.textFrom = new TextBoxCustom();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonClose = new System.Windows.Forms.Button();
             this.dataTranslationsVerbs = new System.Windows.Forms.DataGridView();
@@ -69,8 +69,10 @@ namespace YioTranslate
             this.dataTranslationsAdjectives = new System.Windows.Forms.DataGridView();
             this.tabSubjects = new System.Windows.Forms.TabPage();
             this.dataTranslationsSubjects = new System.Windows.Forms.DataGridView();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabSubstantives = new System.Windows.Forms.TabPage();
             this.dataTranslationsSubstantives = new System.Windows.Forms.DataGridView();
+            this.textSampleYiok = new System.Windows.Forms.TextBox();
+            this.textSamplePtbr = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -82,28 +84,17 @@ namespace YioTranslate
             ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsAdjectives)).BeginInit();
             this.tabSubjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubjects)).BeginInit();
-            this.tabPage1.SuspendLayout();
+            this.tabSubstantives.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubstantives)).BeginInit();
             this.SuspendLayout();
-            // 
-            // textFrom
-            // 
-            this.textFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textFrom.Location = new System.Drawing.Point(6, 10);
-            this.textFrom.Multiline = true;
-            this.textFrom.Name = "textFrom";
-            this.textFrom.Size = new System.Drawing.Size(494, 88);
-            this.textFrom.TabIndex = 2;
-            this.textFrom.TextChanged += new System.EventHandler(this.textFrom_TextChanged);
-            this.textFrom.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textFrom_KeyDown);
             // 
             // textTo
             // 
             this.textTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textTo.Location = new System.Drawing.Point(6, 186);
+            this.textTo.Location = new System.Drawing.Point(6, 158);
             this.textTo.Multiline = true;
             this.textTo.Name = "textTo";
-            this.textTo.Size = new System.Drawing.Size(494, 88);
+            this.textTo.Size = new System.Drawing.Size(494, 60);
             this.textTo.TabIndex = 5;
             // 
             // radioToPortuguese
@@ -140,7 +131,7 @@ namespace YioTranslate
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.groupBox1.Location = new System.Drawing.Point(6, 145);
+            this.groupBox1.Location = new System.Drawing.Point(6, 117);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(494, 35);
             this.groupBox1.TabIndex = 8;
@@ -166,9 +157,9 @@ namespace YioTranslate
             // buttonSave
             // 
             this.buttonSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonSave.Location = new System.Drawing.Point(434, 9);
+            this.buttonSave.Location = new System.Drawing.Point(395, 9);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(49, 23);
+            this.buttonSave.Size = new System.Drawing.Size(88, 23);
             this.buttonSave.TabIndex = 12;
             this.buttonSave.Text = "Salvar";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -176,7 +167,7 @@ namespace YioTranslate
             // 
             // textSugg
             // 
-            this.textSugg.Location = new System.Drawing.Point(328, 11);
+            this.textSugg.Location = new System.Drawing.Point(289, 11);
             this.textSugg.Name = "textSugg";
             this.textSugg.Size = new System.Drawing.Size(100, 20);
             this.textSugg.TabIndex = 9;
@@ -184,7 +175,7 @@ namespace YioTranslate
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(224, 14);
+            this.label1.Location = new System.Drawing.Point(185, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 13);
             this.label1.TabIndex = 8;
@@ -197,9 +188,9 @@ namespace YioTranslate
             this.groupBox2.Controls.Add(this.textFrom);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.textTo);
-            this.groupBox2.Location = new System.Drawing.Point(12, 291);
+            this.groupBox2.Location = new System.Drawing.Point(16, 64);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(506, 281);
+            this.groupBox2.Size = new System.Drawing.Size(506, 225);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.groupBox2_Paint);
@@ -213,7 +204,7 @@ namespace YioTranslate
             this.groupBox3.Controls.Add(this.radioToPortuguese);
             this.groupBox3.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBox3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.groupBox3.Location = new System.Drawing.Point(6, 104);
+            this.groupBox3.Location = new System.Drawing.Point(6, 76);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(494, 35);
             this.groupBox3.TabIndex = 13;
@@ -237,14 +228,25 @@ namespace YioTranslate
             this.label3.TabIndex = 8;
             this.label3.Text = "Traduzir";
             // 
+            // textFrom
+            // 
+            this.textFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textFrom.Location = new System.Drawing.Point(6, 10);
+            this.textFrom.Multiline = true;
+            this.textFrom.Name = "textFrom";
+            this.textFrom.Size = new System.Drawing.Size(494, 60);
+            this.textFrom.TabIndex = 2;
+            this.textFrom.TextChanged += new System.EventHandler(this.textFrom_TextChanged);
+            this.textFrom.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textFrom_KeyDown);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(15, 15);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(498, 280);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.Size = new System.Drawing.Size(58, 53);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -258,7 +260,7 @@ namespace YioTranslate
             this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonClose.ForeColor = System.Drawing.Color.White;
-            this.buttonClose.Location = new System.Drawing.Point(490, 18);
+            this.buttonClose.Location = new System.Drawing.Point(511, 3);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(20, 20);
             this.buttonClose.TabIndex = 11;
@@ -271,7 +273,7 @@ namespace YioTranslate
             this.dataTranslationsVerbs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTranslationsVerbs.Location = new System.Drawing.Point(0, 0);
             this.dataTranslationsVerbs.Name = "dataTranslationsVerbs";
-            this.dataTranslationsVerbs.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsVerbs.Size = new System.Drawing.Size(498, 254);
             this.dataTranslationsVerbs.TabIndex = 14;
             this.dataTranslationsVerbs.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
             // 
@@ -280,13 +282,14 @@ namespace YioTranslate
             this.tabControl.Controls.Add(this.tabVerbs);
             this.tabControl.Controls.Add(this.tabAdjectives);
             this.tabControl.Controls.Add(this.tabSubjects);
-            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabSubstantives);
             this.tabControl.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tabControl.Location = new System.Drawing.Point(524, 15);
+            this.tabControl.Location = new System.Drawing.Point(16, 295);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(539, 557);
+            this.tabControl.Size = new System.Drawing.Size(506, 280);
             this.tabControl.TabIndex = 12;
+            this.tabControl.Click += new System.EventHandler(this.tabControl_Click);
             // 
             // tabVerbs
             // 
@@ -294,7 +297,7 @@ namespace YioTranslate
             this.tabVerbs.Location = new System.Drawing.Point(4, 22);
             this.tabVerbs.Name = "tabVerbs";
             this.tabVerbs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVerbs.Size = new System.Drawing.Size(531, 531);
+            this.tabVerbs.Size = new System.Drawing.Size(498, 254);
             this.tabVerbs.TabIndex = 0;
             this.tabVerbs.Text = "Verbos";
             this.tabVerbs.UseVisualStyleBackColor = true;
@@ -305,7 +308,7 @@ namespace YioTranslate
             this.tabAdjectives.Location = new System.Drawing.Point(4, 22);
             this.tabAdjectives.Name = "tabAdjectives";
             this.tabAdjectives.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdjectives.Size = new System.Drawing.Size(531, 531);
+            this.tabAdjectives.Size = new System.Drawing.Size(498, 254);
             this.tabAdjectives.TabIndex = 1;
             this.tabAdjectives.Text = "Adjetivos";
             this.tabAdjectives.UseVisualStyleBackColor = true;
@@ -315,7 +318,7 @@ namespace YioTranslate
             this.dataTranslationsAdjectives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTranslationsAdjectives.Location = new System.Drawing.Point(0, 0);
             this.dataTranslationsAdjectives.Name = "dataTranslationsAdjectives";
-            this.dataTranslationsAdjectives.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsAdjectives.Size = new System.Drawing.Size(498, 254);
             this.dataTranslationsAdjectives.TabIndex = 15;
             this.dataTranslationsAdjectives.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
             // 
@@ -325,7 +328,7 @@ namespace YioTranslate
             this.tabSubjects.Location = new System.Drawing.Point(4, 22);
             this.tabSubjects.Name = "tabSubjects";
             this.tabSubjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSubjects.Size = new System.Drawing.Size(531, 531);
+            this.tabSubjects.Size = new System.Drawing.Size(498, 254);
             this.tabSubjects.TabIndex = 2;
             this.tabSubjects.Text = "Sujeitos";
             this.tabSubjects.UseVisualStyleBackColor = true;
@@ -335,44 +338,71 @@ namespace YioTranslate
             this.dataTranslationsSubjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTranslationsSubjects.Location = new System.Drawing.Point(0, 0);
             this.dataTranslationsSubjects.Name = "dataTranslationsSubjects";
-            this.dataTranslationsSubjects.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsSubjects.Size = new System.Drawing.Size(498, 254);
             this.dataTranslationsSubjects.TabIndex = 16;
             this.dataTranslationsSubjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
             // 
-            // tabPage1
+            // tabSubstantives
             // 
-            this.tabPage1.Controls.Add(this.dataTranslationsSubstantives);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(531, 531);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "Substantivos";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabSubstantives.Controls.Add(this.dataTranslationsSubstantives);
+            this.tabSubstantives.Location = new System.Drawing.Point(4, 22);
+            this.tabSubstantives.Name = "tabSubstantives";
+            this.tabSubstantives.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSubstantives.Size = new System.Drawing.Size(498, 254);
+            this.tabSubstantives.TabIndex = 3;
+            this.tabSubstantives.Text = "Substantivos";
+            this.tabSubstantives.UseVisualStyleBackColor = true;
             // 
             // dataTranslationsSubstantives
             // 
             this.dataTranslationsSubstantives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTranslationsSubstantives.Location = new System.Drawing.Point(0, 0);
             this.dataTranslationsSubstantives.Name = "dataTranslationsSubstantives";
-            this.dataTranslationsSubstantives.Size = new System.Drawing.Size(531, 531);
+            this.dataTranslationsSubstantives.Size = new System.Drawing.Size(498, 254);
             this.dataTranslationsSubstantives.TabIndex = 17;
             this.dataTranslationsSubstantives.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataTranslations_KeyUp);
+            // 
+            // textSamplesYiok
+            // 
+            this.textSampleYiok.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(22)))), ((int)(((byte)(24)))));
+            this.textSampleYiok.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textSampleYiok.Enabled = false;
+            this.textSampleYiok.ForeColor = System.Drawing.SystemColors.Window;
+            this.textSampleYiok.Location = new System.Drawing.Point(16, 582);
+            this.textSampleYiok.Multiline = true;
+            this.textSampleYiok.Name = "textSamplesYiok";
+            this.textSampleYiok.Size = new System.Drawing.Size(253, 69);
+            this.textSampleYiok.TabIndex = 13;
+            // 
+            // textSamplePtbr
+            // 
+            this.textSamplePtbr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(22)))), ((int)(((byte)(24)))));
+            this.textSamplePtbr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textSamplePtbr.Enabled = false;
+            this.textSamplePtbr.ForeColor = System.Drawing.SystemColors.Window;
+            this.textSamplePtbr.Location = new System.Drawing.Point(269, 582);
+            this.textSamplePtbr.Multiline = true;
+            this.textSamplePtbr.Name = "textSamplePtbr";
+            this.textSamplePtbr.Size = new System.Drawing.Size(253, 69);
+            this.textSamplePtbr.TabIndex = 14;
             // 
             // YioTranslate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(22)))), ((int)(((byte)(24)))));
-            this.ClientSize = new System.Drawing.Size(1075, 586);
-            this.Controls.Add(this.tabControl);
+            this.ClientSize = new System.Drawing.Size(534, 663);
+            this.Controls.Add(this.textSamplePtbr);
+            this.Controls.Add(this.textSampleYiok);
             this.Controls.Add(this.buttonClose);
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "YioTranslate";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YioTranslate";
             this.TopMost = true;
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.YioTranslate_MouseDown);
@@ -391,9 +421,10 @@ namespace YioTranslate
             ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsAdjectives)).EndInit();
             this.tabSubjects.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubjects)).EndInit();
-            this.tabPage1.ResumeLayout(false);
+            this.tabSubstantives.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataTranslationsSubstantives)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -419,9 +450,11 @@ namespace YioTranslate
         private TabPage tabVerbs;
         private TabPage tabAdjectives;
         private TabPage tabSubjects;
-        private TabPage tabPage1;
+        private TabPage tabSubstantives;
         private DataGridView dataTranslationsAdjectives;
         private DataGridView dataTranslationsSubjects;
         private DataGridView dataTranslationsSubstantives;
+        private TextBox textSampleYiok;
+        private TextBox textSamplePtbr;
     }
 }

@@ -40,11 +40,11 @@ namespace YioTranslate
         {
             try
             {
-                var database = new Database();
-                var dicios = database.SelectAll();
+                var dicios = database.SelectAllDicio();
 
                 if (dicios.Count > 0)
                 {
+                    //dataTranslationsNone.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.None).ToList());
                     dataTranslationsVerbs.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.VERB).ToList());
                     dataTranslationsAdjectives.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.ADJECTIVE).ToList());
                     dataTranslationsSubjects.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.SUBJECT).ToList());
@@ -59,12 +59,13 @@ namespace YioTranslate
             try
             {
                 #region TYPE
+                comboType.Items.Insert((int)DicioType.NONE, DicioType.NONE.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.VERB, DicioType.VERB.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.ADJECTIVE, DicioType.ADJECTIVE.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.SUBJECT, DicioType.SUBJECT.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.SUBSTANTIVE, DicioType.SUBSTANTIVE.ToDescriptionString());
 
-                comboType.SelectedIndex = (int)DicioType.SUBSTANTIVE;
+                comboType.SelectedIndex = (int)DicioType.NONE;
                 comboType.Text = ((DicioType)comboType.SelectedIndex).ToDescriptionString();
                 #endregion
                 #region TRANSLATE
@@ -79,6 +80,8 @@ namespace YioTranslate
 
         public YioTranslate()
         {
+            database = new Database();
+
             InitializeComponent();
             LoadDataGridViews();
             LoadComboBoxes();
@@ -98,8 +101,21 @@ namespace YioTranslate
                         translations += translator.TranslateYiok(word, textSugg.Text, dicioTypeSelected, IsToSave);
 
                 textTo.Text = translations;
+
+                //var allRelationships = new List<string>();
+                //var translationsArray = translations.Split(' ').Where(t => !string.IsNullOrEmpty(t)).ToArray();
+                //foreach(var translation in translationsArray)
+                //{
+                //    var relationships = database.SelectRelationshipsByYiokWord(translation).Select(r => $"{r.MainDicio} {r.AdjunctDicio}").ToList();
+                //    allRelationships.AddRange(relationships);
+                //}
+
+                //allRelationships = allRelationships.Distinct().ToList();
+
+                //textSampleYiok.Text = string.Join("\n", allRelationships);
+                //textSamplePtbr.Text = string.Join("\n", allRelationships.Select(r => translator.TranslateToPortuguese(r)));
             }
-            catch { }
+            catch (Exception ex) { }
         }
 
         private void textFrom_TextChanged(object sender, EventArgs e)
@@ -136,6 +152,7 @@ namespace YioTranslate
         }
 
         Point lastPoint;
+        private readonly Database database;
 
         private void YioTranslate_MouseMove(object sender, MouseEventArgs e)
         {
@@ -172,11 +189,30 @@ namespace YioTranslate
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {
+            //if (comboTranslate.SelectedIndex == 1)
+            //    ConnectWords(true);
+            /*else*/
             Translate(true);
+
             LoadDataGridViews();
             textFrom.Text = string.Empty;
             textSugg.Text = string.Empty;
             textTo.Text = string.Empty;
+        }
+
+        private void ConnectWords(bool IsToSave)
+        {
+            var words = textTo.Text.ToLower().Split(' ').Where(w => !string.IsNullOrEmpty(w)).ToArray();
+            for (var i = 0; i < words.Length; i++)
+            {
+                if ((i + 1) < words.Length)
+                {
+                    var main = words[i];
+                    var adjunct = words[i + 1];
+
+                    database.InsertRelationship(main, adjunct);
+                }
+            }
         }
 
         private void groupBox2_Paint(object sender, PaintEventArgs e)
@@ -206,6 +242,11 @@ namespace YioTranslate
         {
             textFrom.Text = string.Empty;
             textTo.Text = string.Empty;
+
+            //if ((sender as ComboBox).SelectedIndex == 1)
+            //    buttonSave.Text = "Relacionar";
+            /*else*/
+            buttonSave.Text = "Salvar";
         }
 
         private void dataTranslations_KeyUp(object sender, KeyEventArgs e)
@@ -237,6 +278,12 @@ namespace YioTranslate
             }
 
             LoadDataGridViews();
+        }
+
+        private void tabControl_Click(object sender, EventArgs e)
+        {
+            comboType.SelectedIndex = (sender as TabControl).SelectedIndex + 1;
+            comboType.Text = ((DicioType)comboType.SelectedIndex).ToDescriptionString();
         }
     }
 }

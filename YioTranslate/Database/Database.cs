@@ -22,16 +22,21 @@ namespace YioTranslate
                         sugg text null,
                         type integer not null
                     );
+
+                    create table Relationship (
+                        id integer primary key AUTOINCREMENT,
+                        mainDicioId integer,
+                        adjunctDicioId integer
+                    );
                 ";
 
                 try
                 {
                     command.ExecuteNonQuery();
+                    PopuleInitialData();
                 }
                 catch { }
             }
-
-            PopuleInitialData();
         }
 
         private void PopuleInitialData()
@@ -109,7 +114,65 @@ namespace YioTranslate
             InsertTranslate("soltar", "harga", type: DicioType.VERB, deleteIfExists: true);
         }
 
-        public IList<Dicio> SelectAll()
+        public void InsertRelationship(string main, string adjunct)
+        {
+            using (var connection = new SQLiteConnection("Data Source=yio.db"))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = @"
+                    insert into Relationship (mainDicioId, adjunctDicioId) 
+                    values (
+                        (select id from Dicio where yiok = @main or sugg = @main), 
+                        (select id from Dicio where yiok = @adjunct or sugg = @adjunct)
+                    );
+                ";
+
+                command.Parameters.AddWithValue("@main", main);
+                command.Parameters.AddWithValue("@adjunct", adjunct);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public IList<Relationship> SelectRelationshipsByYiokWord(string yiokWord)
+        {
+            var relationships = new List<Relationship>();
+            using (var connection = new SQLiteConnection("Data Source=yio.db"))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = @"
+                    select 
+                        r.id, mainDicioId, d.yiok mainDicioYiok, d.sugg mainDicioSugg, d
+                    from relationship r 
+                        inner join dicio d on r.mainDicioId = d.id
+                    where d.yiok = @yiokWord or d.sugg = @yiokWord                   
+                ";
+                command.Parameters.AddWithValue("@yiokWord", yiokWord);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        relationships.Add(new Relationship
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            MainDicioId = Convert.ToInt32(reader["mainDicioId"]),
+                            MainDicio = reader["mainDicio"].ToString(),
+                            AdjunctDicioId = Convert.ToInt32(reader["adjunctDicioId"]),
+                            AdjunctDicio = reader["adjunctDicio"].ToString(),
+                        });
+                    }
+                }
+
+                return relationships;
+            }
+        }
+
+        public IList<Dicio> SelectAllDicio()
         {
             var dicios = new List<Dicio>();
             using (var connection = new SQLiteConnection("Data Source=yio.db"))
@@ -129,11 +192,11 @@ namespace YioTranslate
                         {
                             Id = Convert.ToInt32(reader["id"]),
                             PtBr =
-#if DEBUG
-                                "*********",
-#else
+//#if DEBUG
+//                                "*********",
+//#else
                                 reader["ptbr"].ToString(),
-#endif
+//#endif
                             Yiok = reader["yiok"].ToString().ToUpper(),
                             Sugg = reader["sugg"].ToString().ToUpper(),
                             Type = (DicioType)Convert.ToInt32(reader["type"])

@@ -148,6 +148,8 @@ namespace YioTranslate.Translate
 
                 if (IsToSave) database.InsertTranslate(word, translation, suggestion, dicioType);
 
+                translation = translation + " ";
+
                 return translation;
             }
 

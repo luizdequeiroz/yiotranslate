@@ -2,6 +2,7 @@
 {
     public enum DicioType
     {
+        NONE,
         VERB,
         ADJECTIVE,
         SUBJECT,
@@ -14,6 +15,8 @@
         {
             switch (dicioType)
             {
+                case DicioType.NONE:
+                    return "-";
                 case DicioType.VERB:
                     return "Verbo";
                 case DicioType.ADJECTIVE:
