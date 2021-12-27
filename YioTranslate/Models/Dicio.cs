@@ -16,7 +16,7 @@
         internal string Yiok { get; set; }
         internal string Sugg { get; set; }
         internal DicioType Type { get; set; }
-        public string DicioTypeText
+        internal string DicioTypeText
         {
             get
             {

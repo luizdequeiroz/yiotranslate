@@ -22,12 +22,6 @@ namespace YioTranslate
                         sugg text null,
                         type integer not null
                     );
-
-                    create table Relationship (
-                        id integer primary key AUTOINCREMENT,
-                        mainDicioId integer,
-                        adjunctDicioId integer
-                    );
                 ";
 
                 try
@@ -54,12 +48,16 @@ namespace YioTranslate
             InsertTranslate("lua", "aul", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
             InsertTranslate("lua-cheia", "aul marama", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
             InsertTranslate("lua-cheia", "marama", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("lago", "rita", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("lagoa", "rita", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("mar", "rita fala", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
 
             InsertTranslate("comida", "qaze", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
             InsertTranslate("carne", "qaze", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
             InsertTranslate("água", "hidi", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
             InsertTranslate("fogo", "biral", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
             InsertTranslate("sangue", "qileda", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
+            InsertTranslate("magia", "zitei", type: DicioType.SUBSTANTIVE, deleteIfExists: true);
 
             InsertTranslate("líder", "pappa iwi", type: DicioType.SUBJECT, deleteIfExists: true);
             InsertTranslate("chefe", "pappa iwi", type: DicioType.SUBJECT, deleteIfExists: true);
@@ -96,6 +94,7 @@ namespace YioTranslate
             InsertTranslate("grande", "fala", type: DicioType.ADJECTIVE, deleteIfExists: true);
             InsertTranslate("amigo", "izeta", type: DicioType.ADJECTIVE, deleteIfExists: true);
             InsertTranslate("inimigo", "elezeta", type: DicioType.ADJECTIVE, deleteIfExists: true);
+            InsertTranslate("mágico", "zitei", type: DicioType.ADJECTIVE, deleteIfExists: true);
 
             InsertTranslate("preso", "piliha", type: DicioType.ADJECTIVE, deleteIfExists: true);
             InsertTranslate("solto", "harga", type: DicioType.ADJECTIVE, deleteIfExists: true);
@@ -112,6 +111,7 @@ namespace YioTranslate
             InsertTranslate("dançar-pra-gradecer", "heah", type: DicioType.VERB, deleteIfExists: true);
             InsertTranslate("prender", "piliha", type: DicioType.VERB, deleteIfExists: true);
             InsertTranslate("soltar", "harga", type: DicioType.VERB, deleteIfExists: true);
+            InsertTranslate("lutar", "rogao", type: DicioType.VERB, deleteIfExists: true);
         }
 
         public void InsertRelationship(string main, string adjunct)
@@ -136,42 +136,6 @@ namespace YioTranslate
             }
         }
 
-        public IList<Relationship> SelectRelationshipsByYiokWord(string yiokWord)
-        {
-            var relationships = new List<Relationship>();
-            using (var connection = new SQLiteConnection("Data Source=yio.db"))
-            {
-                connection.Open();
-
-                var command = connection.CreateCommand();
-                command.CommandText = @"
-                    select 
-                        r.id, mainDicioId, d.yiok mainDicioYiok, d.sugg mainDicioSugg, d
-                    from relationship r 
-                        inner join dicio d on r.mainDicioId = d.id
-                    where d.yiok = @yiokWord or d.sugg = @yiokWord                   
-                ";
-                command.Parameters.AddWithValue("@yiokWord", yiokWord);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        relationships.Add(new Relationship
-                        {
-                            Id = Convert.ToInt32(reader["id"]),
-                            MainDicioId = Convert.ToInt32(reader["mainDicioId"]),
-                            MainDicio = reader["mainDicio"].ToString(),
-                            AdjunctDicioId = Convert.ToInt32(reader["adjunctDicioId"]),
-                            AdjunctDicio = reader["adjunctDicio"].ToString(),
-                        });
-                    }
-                }
-
-                return relationships;
-            }
-        }
-
         public IList<Dicio> SelectAllDicio()
         {
             var dicios = new List<Dicio>();
@@ -191,12 +155,7 @@ namespace YioTranslate
                         dicios.Add(new Dicio
                         {
                             Id = Convert.ToInt32(reader["id"]),
-                            PtBr =
-//#if DEBUG
-//                                "*********",
-//#else
-                                reader["ptbr"].ToString(),
-//#endif
+                            PtBr = reader["ptbr"].ToString(),
                             Yiok = reader["yiok"].ToString().ToUpper(),
                             Sugg = reader["sugg"].ToString().ToUpper(),
                             Type = (DicioType)Convert.ToInt32(reader["type"])

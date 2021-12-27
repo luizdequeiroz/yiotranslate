@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using YioTranslate.Models;
 using YioTranslate.Translate;
@@ -11,44 +13,27 @@ namespace YioTranslate
 {
     public partial class YioTranslate : Form
     {
-        public DataTable ConvertListToDataTable<T>(IList<T> list)
-        {
-            var oDataTable = new DataTable();
-            var columns = new List<DataColumn> {
-                new DataColumn("ID"),
-                new DataColumn("Português".ToUpper()),
-                new DataColumn("Yiokarih".ToUpper()),
-                new DataColumn("Tipo".ToUpper())
-            }.ToArray();
 
-            try
-            {
-                oDataTable.Columns.AddRange(columns);
-
-                foreach (var item in list)
-                {
-                    var properties = item.GetType().GetProperties().Select(p => Convert.ToString(p.GetValue(item))).ToList();
-                    oDataTable.Rows.Add(properties.ToArray());
-                }
-            }
-            catch { }
-
-            return oDataTable;
-        }
 
         private void LoadDataGridViews()
         {
             try
             {
-                var dicios = database.SelectAllDicio();
+                var dicios = database.SelectAllDicio().OrderBy(d => d.PtBr).ToList();
 
                 if (dicios.Count > 0)
                 {
-                    //dataTranslationsNone.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.None).ToList());
-                    dataTranslationsVerbs.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.VERB).ToList());
-                    dataTranslationsAdjectives.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.ADJECTIVE).ToList());
-                    dataTranslationsSubjects.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.SUBJECT).ToList());
-                    dataTranslationsSubstantives.DataSource = ConvertListToDataTable(dicios.Where(d => d.Type == DicioType.SUBSTANTIVE).ToList());
+                    dataTranslationsVerbs.AddListToDataTable(dicios.Where(d => d.Type == DicioType.VERB).ToList());
+                    dataAllVerbs.AddListToDataTable(dicios.Where(d => d.Type == DicioType.VERB).ToList());
+
+                    dataTranslationsAdjectives.AddListToDataTable(dicios.Where(d => d.Type == DicioType.ADJECTIVE).ToList());
+                    dataAllAdjectives.AddListToDataTable(dicios.Where(d => d.Type == DicioType.ADJECTIVE).ToList());
+
+                    dataTranslationsSubjects.AddListToDataTable(dicios.Where(d => d.Type == DicioType.SUBJECT).ToList());
+                    dataAllSubjects.AddListToDataTable(dicios.Where(d => d.Type == DicioType.SUBJECT).ToList());
+
+                    dataTranslationsSubstantives.AddListToDataTable(dicios.Where(d => d.Type == DicioType.SUBSTANTIVE).ToList());
+                    dataAllSubstantives.AddListToDataTable(dicios.Where(d => d.Type == DicioType.SUBSTANTIVE).ToList());
                 }
             }
             catch { }
@@ -59,14 +44,10 @@ namespace YioTranslate
             try
             {
                 #region TYPE
-                comboType.Items.Insert((int)DicioType.NONE, DicioType.NONE.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.VERB, DicioType.VERB.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.ADJECTIVE, DicioType.ADJECTIVE.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.SUBJECT, DicioType.SUBJECT.ToDescriptionString());
                 comboType.Items.Insert((int)DicioType.SUBSTANTIVE, DicioType.SUBSTANTIVE.ToDescriptionString());
-
-                comboType.SelectedIndex = (int)DicioType.NONE;
-                comboType.Text = ((DicioType)comboType.SelectedIndex).ToDescriptionString();
                 #endregion
                 #region TRANSLATE
                 comboTranslate.Items.Insert(0, "Palavra");
@@ -85,6 +66,15 @@ namespace YioTranslate
             InitializeComponent();
             LoadDataGridViews();
             LoadComboBoxes();
+
+            groupToSave.Visible = false;
+            dataAllVerbs.Columns["Id"].Visible = false;
+            dataAllAdjectives.Columns["Id"].Visible = false;
+            dataAllSubjects.Columns["Id"].Visible = false;
+            dataAllSubstantives.Columns["Id"].Visible = false;
+
+            var assemblyInfo = Assembly.GetExecutingAssembly().GetName();
+            version.Text = $"v{assemblyInfo.Version}";
         }
 
         private void Translate(bool IsToSave)
@@ -101,19 +91,6 @@ namespace YioTranslate
                         translations += translator.TranslateYiok(word, textSugg.Text, dicioTypeSelected, IsToSave);
 
                 textTo.Text = translations;
-
-                //var allRelationships = new List<string>();
-                //var translationsArray = translations.Split(' ').Where(t => !string.IsNullOrEmpty(t)).ToArray();
-                //foreach(var translation in translationsArray)
-                //{
-                //    var relationships = database.SelectRelationshipsByYiokWord(translation).Select(r => $"{r.MainDicio} {r.AdjunctDicio}").ToList();
-                //    allRelationships.AddRange(relationships);
-                //}
-
-                //allRelationships = allRelationships.Distinct().ToList();
-
-                //textSampleYiok.Text = string.Join("\n", allRelationships);
-                //textSamplePtbr.Text = string.Join("\n", allRelationships.Select(r => translator.TranslateToPortuguese(r)));
             }
             catch (Exception ex) { }
         }
@@ -172,12 +149,12 @@ namespace YioTranslate
             lastPoint = new Point(e.X, e.Y);
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
         {
             YioTranslate_MouseMove(sender, e);
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
         {
             YioTranslate_MouseDown(sender, e);
         }
@@ -189,30 +166,12 @@ namespace YioTranslate
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-            //if (comboTranslate.SelectedIndex == 1)
-            //    ConnectWords(true);
-            /*else*/
             Translate(true);
 
             LoadDataGridViews();
             textFrom.Text = string.Empty;
             textSugg.Text = string.Empty;
             textTo.Text = string.Empty;
-        }
-
-        private void ConnectWords(bool IsToSave)
-        {
-            var words = textTo.Text.ToLower().Split(' ').Where(w => !string.IsNullOrEmpty(w)).ToArray();
-            for (var i = 0; i < words.Length; i++)
-            {
-                if ((i + 1) < words.Length)
-                {
-                    var main = words[i];
-                    var adjunct = words[i + 1];
-
-                    database.InsertRelationship(main, adjunct);
-                }
-            }
         }
 
         private void groupBox2_Paint(object sender, PaintEventArgs e)
@@ -242,48 +201,74 @@ namespace YioTranslate
         {
             textFrom.Text = string.Empty;
             textTo.Text = string.Empty;
-
-            //if ((sender as ComboBox).SelectedIndex == 1)
-            //    buttonSave.Text = "Relacionar";
-            /*else*/
-            buttonSave.Text = "Salvar";
-        }
-
-        private void dataTranslations_KeyUp(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.KeyCode == Keys.Delete)
-                {
-                    DeleteTranslation(sender as DataGridView);
-                }
-            }
-            catch { }
-        }
-
-        private void DeleteTranslation(DataGridView dataGridView)
-        {
-            var rowIds = new List<int>();
-            foreach (DataGridViewCell cell in dataGridView.SelectedCells)
-            {
-                var row = dataGridView.Rows[cell.RowIndex];
-                rowIds.Add(Convert.ToInt32(cell.DataGridView[0, cell.RowIndex].Value));
-            }
-
-            foreach (var id in rowIds)
-            {
-                var database = new Database();
-
-                database.DeleteTranslation(id);
-            }
-
-            LoadDataGridViews();
         }
 
         private void tabControl_Click(object sender, EventArgs e)
         {
-            comboType.SelectedIndex = (sender as TabControl).SelectedIndex + 1;
-            comboType.Text = ((DicioType)comboType.SelectedIndex).ToDescriptionString();
+            comboType.SelectedIndex = (sender as TabControl).SelectedIndex - 1;
+
+            if (comboType.SelectedIndex < 0)
+                groupToSave.Visible = false;
+            else
+            {
+                groupToSave.Visible = true;
+                comboType.Text = ((DicioType)comboType.SelectedIndex).ToDescriptionString();
+            }
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://discord.gg/XZpDRnw8wv");
+        }
+
+        //private void dataTranslations_Remove(object dataGridView, DataGridViewRowsRemovedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var rowIds = new List<int>();
+        //        foreach (DataGridViewCell cell in (dataGridView as DataGridView).SelectedCells)
+        //        {
+        //            var row = (dataGridView as DataGridView).Rows[cell.RowIndex];
+        //            rowIds.Add(Convert.ToInt32(cell.DataGridView[0, cell.RowIndex].Value));
+        //        }
+
+        //        foreach (var id in rowIds)
+        //        {
+        //            var database = new Database();
+
+        //            database.DeleteTranslation(id);
+        //        }
+
+        //    }
+        //    catch (Exception ex) { }
+        //}
+    }
+
+    public static class Extension
+    {
+        public static void AddListToDataTable<T>(this DataGridView dataGridView, IList<T> list)
+        {
+            var dataTable = new DataTable();
+
+            var columns = new List<DataColumn> {
+                new DataColumn("Id"),
+                new DataColumn("Português".ToUpper()),
+                new DataColumn("Yiokarih".ToUpper())
+            }.ToArray();
+
+            try
+            {
+                dataTable.Columns.AddRange(columns);
+
+                foreach (var item in list)
+                {
+                    var properties = item.GetType().GetProperties().Select(p => Convert.ToString(p.GetValue(item))).ToList();
+                    dataTable.Rows.Add(properties.ToArray());
+                }
+            }
+            catch { }
+
+            dataGridView.DataSource = dataTable;
         }
     }
 }

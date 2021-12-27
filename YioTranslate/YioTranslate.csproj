@@ -90,7 +90,6 @@
     <Compile Include="Database\Database.cs" />
     <Compile Include="Models\Dicio.cs" />
     <Compile Include="Models\DicioType.cs" />
-    <Compile Include="Models\Relationship.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translate\Translator.cs" />
@@ -108,6 +107,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="YioTranslate.resx">
       <DependentUpon>YioTranslate.cs</DependentUpon>
@@ -142,8 +142,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="2Primitivos.png" />
     <Content Include="bal-gruf-head.ico" />
     <Content Include="bal-gruf-head.png" />
+    <Content Include="primordial.gif" />
     <Content Include="primitivo.png" />
   </ItemGroup>
   <ItemGroup>
